@@ -1,0 +1,68 @@
+class Autenticacion
+    def initialize(usuario, contrasena)
+      @usuario = usuario
+      @contrasena = contrasena
+    end
+  
+    def autenticar
+      puts "Por favor ingresa tu usuario:"
+      input_usuario = gets.chomp
+      puts "Por favor ingresa tu contraseña:"
+      input_contrasena = gets.chomp
+  
+      if input_usuario == "usuario" && input_contrasena == "contrasena"
+        return true
+      else
+        puts "Credenciales incorrectas. No se puede leer el archivo."
+        return false
+      end
+    end
+  end
+  
+  class BuscadorTexto
+    def buscar_palabra(palabra)
+      if autenticacion.autenticar
+        archivo = File.open("METAMORFOSIS.txt", "r")
+        contenido = archivo.read.downcase
+        archivo.close
+  
+        conteo = 0
+        indice = 0
+  
+        while indice = contenido.index(palabra.downcase, indice)
+          conteo += 1
+          indice += palabra.length
+        end
+  
+        puts "La palabra '#{palabra}' se repite #{conteo} veces en el archivo."
+      end
+    end
+  
+    def buscar_oracion(oracion)
+      if autenticacion.autenticar
+        archivo = File.open("METAMORFOSIS.txt", "r")
+        contenido = archivo.read.downcase
+        archivo.close
+  
+        conteo = 0
+        indice = 0
+  
+        while indice = contenido.index(/#{Regexp.escape(oracion.downcase)}/, indice)
+          conteo += 1
+          indice += oracion.length
+        end
+  
+        puts "La oración '#{oracion}' se repite #{conteo} veces en el archivo."
+      end
+    end
+  
+    private
+  
+    def autenticacion
+      Autenticacion.new("usuario_correcto", "contrasena_correcta")
+    end
+  end
+  
+  buscador = BuscadorTexto.new
+  buscador.buscar_palabra("palabra_a_buscar")
+  buscador.buscar_oracion("oracion_a_buscar")
